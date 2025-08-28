@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interclasses Games: SENAI Gamer</title>
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+    <!-- Fontes e CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Loader Inicial -->
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Menu de Navegação -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="assets/img/logo.png" alt="Logo Interclasses">
+        </div>
+        <ul class="navbar-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#jogos">Jogos</a></li>
+            <li><a href="#inscricao">Inscrição</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+        <div class="menu-toggle" id="menu-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <!-- Seção Inicial -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Interclasses Games <span class="highlight">SENAI</span> Gamer</h1>
+            <p class="hero-subtitle">Prepare-se para competir e conquistar o topo!</p>
+            <div class="hero-buttons">
+                <a href="#inscricao" class="btn-primary">Inscrever-se</a>
+                <a href="#sobre" class="btn-secondary">Saiba Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre o Evento -->
+    <section id="sobre" class="section-about">
+        <h2>Sobre o Evento</h2>
+        <p>O Interclasses Games é o maior evento de eSports do SENAI, reunindo jogadores de todas as escolas para competições em diversos jogos!</p>
+    </section>
+
+    <!-- Seção de Jogos -->
+    <section id="jogos" class="section-games">
+        <h2>Jogos Disponíveis</h2>
+        <div class="games-container">
+            <div class="game-card">
+                <img src="assets/img/fifa24.png" alt="FIFA 24">
+                <h3>EA Sports FC 24</h3>
+                <p>O futebol mais realista de todos os tempos! Desafie os melhores.</p>
+            </div>
+            <div class="game-card">
+                <img src="assets/img/street-fighter6.png" alt="Street Fighter 6">
+                <h3>Street Fighter 6</h3>
+                <p>Prepare-se para lutas épicas no maior torneio de luta.</p>
+            </div>
+            <div class="game-card">
+                <img src="assets/img/pokemon.png" alt="Pokémon TCG">
+                <h3>Pokémon TCG</h3>
+                <p>Comande seu deck e vença os adversários na maior batalha de cartas!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulário de Inscrição -->
+    <section id="inscricao" class="section-register">
+        <h2>Inscreva-se agora!</h2>
+        <p>Participe do evento e garanta sua vaga nas competições.</p>
+        <a href="https://forms.gle/ixhE2SBdjAumGCpx5" target="_blank" class="btn-primary">Inscrever-se</a>
+    </section>
+
+    <!-- Rodapé -->
+    <footer id="contato" class="footer">
+        <p>Desenvolvido por Equipe de TI SENAI | Prof. Leandro G. Rosa</p>
+        <p>Contato: <a href="mailto:contato@senai.com">contato@senai.com</a></p>
+    </footer>
+
+    <!-- Scripts JS -->
+    <script src="main.js"></script>
+</body>
+</html>

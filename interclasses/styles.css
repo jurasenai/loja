@@ -1,0 +1,247 @@
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f7f7f7;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.navbar-logo img {
+    height: 50px;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.navbar-links li a:hover {
+    color: #ff5e5e;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .navbar-links.active {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navbar-links.active .menu-toggle .bar:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .navbar-links.active .menu-toggle .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar-links.active .menu-toggle .bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(45deg, #ff6a00, #ff5e5e);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.hero-buttons .btn-primary,
+.hero-buttons .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 30px;
+    margin: 10px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.hero-buttons .btn-primary {
+    background-color: #ff5e5e;
+    color: white;
+}
+
+.hero-buttons .btn-secondary {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.hero-buttons .btn-primary:hover {
+    transform: scale(1.1);
+    background-color: #ff3b3b;
+}
+
+.hero-buttons .btn-secondary:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: #ff5e5e;
+}
+
+/* Loader */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #ff5e5e;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Seções */
+.section-about, .section-games, .section-register {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section-about h2,
+.section-games h2,
+.section-register h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.section-about p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Cards de Jogos */
+.games-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.game-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+}
+
+.game-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.game-card h3 {
+    font-size: 1.4rem;
+    margin-top: 15px;
+}
+
+.game-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Rodapé */
+.footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer a {
+    color: #ff5e5e;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

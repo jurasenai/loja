@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Produto</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>Adicionar Produto</h1>
+
+    <form action="http://localhost:8000/api/produtos/" method="POST" enctype="multipart/form-data">
+        <label for="nome">Nome:</label><br>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="descricao">Descrição:</label><br>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
+
+        <label for="preco">Preço:</label><br>
+        <input type="number" id="preco" name="preco" step="0.01" required><br><br>
+
+        <label for="categoria_id">Categoria:</label><br>
+        <select id="categoria_id" name="categoria_id" required>
+            <option value="">Carregando categorias...</option>
+        </select><br><br>
+
+        <label for="imagem">Imagem (opcional):</label><br>
+        <input type="file" id="imagem" name="imagem" accept="image/*"><br><br>
+
+        <input type="submit" value="Cadastrar Produto">
+    </form>
+
+    <script>
+        // Carregar categorias da API e preencher o select
+        fetch('http://localhost:8000/api/categorias/')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('categoria_id');
+                select.innerHTML = '<option value="">Selecione uma categoria</option>';
+                data.forEach(categoria => {
+                    const option = document.createElement('option');
+                    option.value = categoria.id;
+                    option.textContent = categoria.nome;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar categorias:', error);
+                const select = document.getElementById('categoria_id');
+                select.innerHTML = '<option value="">Erro ao carregar categorias</option>';
+            });
+    </script>
+</body>
+</html>

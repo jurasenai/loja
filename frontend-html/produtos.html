@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f8;
+            margin: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background: #3498db;
+            color: white;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        form {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        form h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        input[type="submit"] {
+            background: #3498db;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background: #2980b9;
+        }
+        .file-upload-container {
+            position: relative;
+            max-width: 100%;
+            margin-bottom: 16px;
+        }
+        .file-upload-container input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+        }
+        .file-upload-container .fake-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .file-upload-container .fake-btn:hover {
+            background: #2980b9;
+        }
+        .file-upload-container .file-name {
+            margin-top: 6px;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestão de Produtos</h1>
+
+    <!-- Tabela de Produtos -->
+    <table id="produtos-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Categoria</th>
+                <th>Imagem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas de produto serão adicionadas dinamicamente -->
+        </tbody>
+    </table>
+
+    <!-- Formulário para Criar Produto -->
+    <form id="produto-form">
+        <h2>Criar Produto</h2>
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" required>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" rows="4" required></textarea>
+
+        <label for="preco">Preço</label>
+        <input type="number" id="preco" step="0.01" required>
+
+        <label for="categoria">Categoria</label>
+        <select id="categoria" required></select>
+
+        <label>Imagem do Produto</label>
+        <div class="file-upload-container">
+            <input type="file" id="imagem" accept="image/*">
+            <div class="fake-btn">Escolher imagem...</div>
+            <div class="file-name" id="file-name">Nenhum arquivo selecionado</div>
+        </div>
+
+        <input type="submit" value="Criar Produto">
+    </form>
+
+    <script>
+        const apiUrl = 'http://127.0.0.1:8000/api/';
+
+        // Função para atualizar o nome do arquivo da imagem selecionada
+        function displayFileName() {
+            const input = document.getElementById('imagem');
+            const nameDiv = document.getElementById('file-name');
+            nameDiv.textContent = input.files[0]?.name || 'Nenhum arquivo selecionado';
+        }
+
+        // Evento para exibir o nome do arquivo da imagem
+        document.getElementById('imagem').addEventListener('change', displayFileName);
+
+        // Função para buscar categorias
+        function getCategorias() {
+            fetch(apiUrl + 'categorias/')
+                .then(res => {
+                    if (!res.ok) throw new Error(res.statusText);
+                    return res.json();
+                })
+                .then(data => {
+                    const sel = document.getElementById('categoria');
+                    data.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c.id;
+                        opt.textContent = c.nome;
+                        sel.appendChild(opt);
+                    });
+                })
+                .catch(console.error);
+        }
+
+        // Função para buscar produtos e exibir na tabela
+        function getProdutos() {
+            fetch(apiUrl + 'produtos/')
+                .then(res => {
+                    if (!res.ok) throw new Error(res.statusText);
+                    return res.json();
+                })
+                .then(data => {
+                    const tbody = document.querySelector('#produtos-table tbody');
+                    tbody.innerHTML = '';
+                    data.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${p.nome}</td>
+                            <td>${p.descricao}</td>
+                            <td>R$ ${p.preco}</td>
+                            <td>${p.categoria.nome}</td>
+                            <td>${p.imagem ? '<img src="' + p.imagem + '" style="max-height:60px;">' : ''}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(console.error);
+        }
+
+        // Função para criar produto
+        function criarProduto(e) {
+            e.preventDefault();
+
+            const form = document.getElementById('produto-form');
+            const fd = new FormData();
+            fd.append('nome', form.nome.value);
+            fd.append('descricao', form.descricao.value);
+            fd.append('preco', form.preco.value);
+            fd.append('categoria', form.categoria.value);
+
+            // Enviar imagem apenas se o arquivo foi selecionado
+            if (form.imagem.files[0]) {
+                fd.append('imagem', form.imagem.files[0]);
+            }
+
+            // Enviar os dados do produto para o backend
+            fetch(apiUrl + 'produtos/', {
+                method: 'POST',
+                body: fd
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(`Erro: ${err.detail || 'Informações inválidas'}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Produto criado com sucesso', data);
+                displayFileName(); // Atualiza o nome do arquivo da imagem
+                form.reset(); // Reseta o formulário
+                getProdutos(); // Atualiza a lista de produtos
+            })
+            .catch(error => {
+                console.error('Erro ao criar produto:', error);
+                alert('Ocorreu um erro ao criar o produto. Detalhes: ' + error.message);
+            });
+        }
+
+        // Inicializar o conteúdo da página
+        document.addEventListener('DOMContentLoaded', () => {
+            getCategorias();
+            getProdutos();
+            document.getElementById('produto-form')
+                .addEventListener('submit', criarProduto);
+        });
+    </script>
+</body>
+</html>
